@@ -1,5 +1,5 @@
 import { getAuth, onAuthStateChanged } from "@firebase/auth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Nav from "./components/Nav";
 import "./firebase-config";
@@ -11,20 +11,23 @@ import SignUpPage from "./pages/SignUpPage";
 import UpdatePage from "./pages/UpdatePage";
 
 export default function App() {
-    const auth = getAuth();
     const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth")); // default value comes from localStorage
 
-    onAuthStateChanged(auth, user => {
-        if (user) {
-            //user is authenticated / signed in
-            setIsAuth(true); // set isAuth to true
-            localStorage.setItem("isAuth", true); // also, save isAuth in localStorage
-        } else {
-            // user is not authenticated / not signed in
-            setIsAuth(false); // set isAuth to false
-            localStorage.removeItem("isAuth"); // remove isAuth from localStorage
-        }
-    });
+    useEffect(() => {
+        const auth = getAuth();
+
+        onAuthStateChanged(auth, user => {
+            if (user) {
+                //user is authenticated / signed in
+                setIsAuth(true); // set isAuth to true
+                localStorage.setItem("isAuth", true); // also, save isAuth in localStorage
+            } else {
+                // user is not authenticated / not signed in
+                setIsAuth(false); // set isAuth to false
+                localStorage.removeItem("isAuth"); // remove isAuth from localStorage
+            }
+        });
+    }, []);
 
     // variable holding all private routes including the nav bar
     const privateRoutes = (

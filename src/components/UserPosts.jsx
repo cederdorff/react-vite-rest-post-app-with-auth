@@ -6,7 +6,8 @@ export default function UserPosts({ uid }) {
 
     useEffect(() => {
         async function getPosts() {
-            const url = `https://react-rest-and-auth-default-rtdb.europe-west1.firebasedatabase.app/posts.json?orderBy="uid"&equalTo="${uid}"`;
+            const url = `${import.meta.env.VITE_FIREBASE_DB_URL}/posts.json?orderBy="uid"&equalTo="${uid}"`;
+            // mTo make this work, you must create an index on "uid" in Firebase Realtime Database Rules
             const response = await fetch(url);
             const data = await response.json();
             const postsArray = Object.keys(data).map(key => ({ id: key, ...data[key] })); // from object to array
@@ -16,5 +17,9 @@ export default function UserPosts({ uid }) {
             getPosts();
         }
     }, [uid]);
-    return <section className="grid-container">{posts.length ? posts.map(post => <PostCard post={post} key={post.id} />) : <p>No posts yet</p>}</section>;
+    return (
+        <section className="grid-container">
+            {posts.length ? posts.map(post => <PostCard post={post} key={post.id} />) : <p>No posts yet</p>}
+        </section>
+    );
 }

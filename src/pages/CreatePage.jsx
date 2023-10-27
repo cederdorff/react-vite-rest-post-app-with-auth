@@ -9,7 +9,7 @@ export default function CreatePage() {
     async function createPost(newPost) {
         newPost.uid = auth.currentUser.uid; // authenticated user id
 
-        const url = "https://react-rest-and-auth-default-rtdb.europe-west1.firebasedatabase.app/posts.json";
+        const url = `${import.meta.env.VITE_FIREBASE_DB_URL}/posts.json`;
         const response = await fetch(url, {
             method: "POST",
             body: JSON.stringify(newPost)

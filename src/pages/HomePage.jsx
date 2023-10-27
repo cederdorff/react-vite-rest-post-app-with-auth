@@ -6,7 +6,7 @@ export default function HomePage() {
 
     useEffect(() => {
         async function getPosts() {
-            const url = "https://react-rest-and-auth-default-rtdb.europe-west1.firebasedatabase.app/posts.json";
+            const url = `${import.meta.env.VITE_FIREBASE_DB_URL}/posts.json`;
             const response = await fetch(url);
             const data = await response.json();
             const postsArray = Object.keys(data).map(key => ({ id: key, ...data[key] })); // from object to array

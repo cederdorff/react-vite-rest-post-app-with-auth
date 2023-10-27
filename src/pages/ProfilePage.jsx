@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAuth, signOut } from "firebase/auth";
-import imgPlaceholder from "../assets/img/img-placeholder.jpg";
+import imgPlaceholder from "../assets/img/user-placeholder.jpg";
 import UserPosts from "../components/UserPosts";
 
 export default function ProfilePage() {
@@ -10,13 +10,13 @@ export default function ProfilePage() {
     const [image, setImage] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
     const auth = getAuth();
-    const url = `https://react-rest-and-auth-default-rtdb.europe-west1.firebasedatabase.app/users/${auth.currentUser?.uid}.json`;
+    const url = `${import.meta.env.VITE_FIREBASE_DB_URL}/users/${auth.currentUser?.uid}.json`;
 
     useEffect(() => {
         async function getUser() {
             const response = await fetch(url);
             const userData = await response.json();
-            console.log(userData);
+
             if (userData) {
                 // if userData exists set states with values from userData (data from firestore)
                 setName(userData.name);
@@ -76,20 +76,44 @@ export default function ProfilePage() {
             <form onSubmit={handleSubmit}>
                 <label>
                     Name
-                    <input type="text" value={name} onChange={e => setName(e.target.value)} name="name" placeholder="Type name" />
+                    <input
+                        type="text"
+                        value={name}
+                        onChange={e => setName(e.target.value)}
+                        name="name"
+                        placeholder="Type name"
+                    />
                 </label>
                 <label>
                     Email
-                    <input type="email" value={email} onChange={e => setEmail(e.target.value)} name="email" placeholder="Type email" disabled />
+                    <input
+                        type="email"
+                        value={email}
+                        onChange={e => setEmail(e.target.value)}
+                        name="email"
+                        placeholder="Type email"
+                        disabled
+                    />
                 </label>
                 <label>
                     Title
-                    <input type="text" value={title} onChange={e => setTitle(e.target.value)} name="title" placeholder="Type your title" />
+                    <input
+                        type="text"
+                        value={title}
+                        onChange={e => setTitle(e.target.value)}
+                        name="title"
+                        placeholder="Type your title"
+                    />
                 </label>
                 <label>
                     Image
                     <input type="file" className="file-input" accept="image/*" onChange={handleImageChange} />
-                    <img className="image-preview" src={image} alt="Choose" onError={event => (event.target.src = imgPlaceholder)} />
+                    <img
+                        className="image-preview"
+                        src={image}
+                        alt="Choose"
+                        onError={event => (event.target.src = imgPlaceholder)}
+                    />
                 </label>
                 <p className="text-error">{errorMessage}</p>
                 <button>Save User</button>

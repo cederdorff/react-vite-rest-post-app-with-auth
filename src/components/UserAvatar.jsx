@@ -7,7 +7,7 @@ export default function UserAvatar({ uid }) {
         name: "User's Name",
         title: "User's Title"
     });
-    const url = `https://react-rest-and-auth-default-rtdb.europe-west1.firebasedatabase.app/users/${uid}.json`;
+    const url = `${import.meta.env.VITE_FIREBASE_DB_URL}/users/${uid}.json`;
 
     useEffect(() => {
         async function getUser() {
@@ -20,7 +20,7 @@ export default function UserAvatar({ uid }) {
 
     return (
         <div className="avatar">
-            <img src={user.image} alt={user.id} />
+            <img src={user.image || placerholder} alt={user.id} />
             <span>
                 <h3>{user.name}</h3>
                 <p>{user.title}</p>

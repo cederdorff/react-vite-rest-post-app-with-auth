@@ -31,7 +31,7 @@ export default function SignUpPage() {
     }
 
     async function createUser(uid, mail) {
-        const url = `https://react-rest-and-auth-default-rtdb.europe-west1.firebasedatabase.app/users/${uid}.json`;
+        const url = `${import.meta.env.VITE_FIREBASE_DB_URL}/users/${uid}.json`;
         const response = await fetch(url, {
             method: "PUT",
             body: JSON.stringify({ name, mail })
@@ -48,7 +48,13 @@ export default function SignUpPage() {
         <section className="page">
             <h1>Sign Up</h1>
             <form onSubmit={handleSignUp}>
-                <input type="text" value={name} onChange={e => setName(e.target.value)} name="name" placeholder="Type your name" />
+                <input
+                    type="text"
+                    value={name}
+                    onChange={e => setName(e.target.value)}
+                    name="name"
+                    placeholder="Type your name"
+                />
                 <input type="email" name="mail" placeholder="Type your mail" />
                 <input type="password" name="password" placeholder="Type your password" />
                 <p className="text-error">{errorMessage}</p>

@@ -4,14 +4,13 @@ import { getAuth } from "@firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyCwXQIxmiskVwawKHLI7v80G5VVEFtUP08",
-    authDomain: "react-rest-and-auth.firebaseapp.com",
-    databaseURL:
-        "https://react-rest-and-auth-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "react-rest-and-auth",
-    storageBucket: "react-rest-and-auth.appspot.com",
-    messagingSenderId: "1037137825554",
-    appId: "1:1037137825554:web:b065716ecf926d57f16dcb"
+    apiKey: "AIzaSyAtEmD6kME_dfg_jzm45Up2U_rdubK-iAQ",
+    authDomain: "fb-rest-race.firebaseapp.com",
+    databaseURL: "https://fb-rest-race-default-rtdb.firebaseio.com",
+    projectId: "fb-rest-race",
+    storageBucket: "fb-rest-race.appspot.com",
+    messagingSenderId: "950177214357",
+    appId: "1:950177214357:web:3612a14fba6a7f368f109c"
 };
 
 // Initialize Firebase

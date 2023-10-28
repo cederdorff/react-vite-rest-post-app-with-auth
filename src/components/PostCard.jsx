@@ -1,27 +1,17 @@
 import { useNavigate } from "react-router-dom";
 import UserAvatar from "./UserAvatar";
-import { useState, useEffect } from "react";
 import { getAuth } from "firebase/auth";
+import { useEffect, useState } from "react";
 
-export default function PostCard({ post }) {
-    const auth = getAuth();
+export default function PostCard({ post, fav }) {
     const navigate = useNavigate();
-    const [favs, setFavs] = useState({});
-    const url = `${import.meta.env.VITE_FIREBASE_DB_URL}/users/${auth?.currentUser?.uid}/favorites.json`;
+    const auth = getAuth();
     const favUrl = `${import.meta.env.VITE_FIREBASE_DB_URL}/users/${auth?.currentUser?.uid}/favorites/${post.id}.json`;
+    const [isFav, setIsFav] = useState(false);
 
     useEffect(() => {
-        async function getFavorites() {
-            const response = await fetch(url);
-            const data = await response.json();
-            if (data) {
-                console.log(data);
-                setFavs(data);
-            }
-        }
-        getFavorites();
-    }, [url]);
-
+        setIsFav(fav ? true : false);
+    }, [fav]);
     /**
      * handleClick is called when user clicks on the Article (PostCard)
      */
@@ -36,7 +26,7 @@ export default function PostCard({ post }) {
         });
         if (response.ok) {
             // update local state
-            setFavs({ ...favs, [post.id]: post.id });
+            setIsFav(true);
         }
     }
 
@@ -45,10 +35,7 @@ export default function PostCard({ post }) {
             method: "DELETE"
         });
         if (response.ok) {
-            // update local state
-            const current = { ...favs };
-            delete current[post.id];
-            setFavs(current);
+            setIsFav(false);
         }
     }
 
@@ -59,7 +46,7 @@ export default function PostCard({ post }) {
                 <img src={post.image} alt={post.caption} />
                 <h2>{post.caption}</h2>
             </div>
-            {favs[post.id] ? (
+            {isFav ? (
                 <button className="light" onClick={handleRemoveFromFav}>
                     Remove from favorites
                 </button>

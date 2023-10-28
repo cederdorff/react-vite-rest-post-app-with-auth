@@ -6,7 +6,6 @@ export default function HomePage() {
     const [posts, setPosts] = useState([]);
     const auth = getAuth();
     const [favs, setFavs] = useState({});
-    const url = `${import.meta.env.VITE_FIREBASE_DB_URL}/users/${auth?.currentUser?.uid}/favorites.json`;
 
     useEffect(() => {
         async function getPosts() {
@@ -21,6 +20,7 @@ export default function HomePage() {
 
     useEffect(() => {
         async function getFavorites() {
+            const url = `${import.meta.env.VITE_FIREBASE_DB_URL}/users/${auth?.currentUser?.uid}/favorites.json`;
             const response = await fetch(url);
             const data = await response.json();
             if (data) {
@@ -28,7 +28,7 @@ export default function HomePage() {
             }
         }
         getFavorites();
-    }, [url]);
+    }, [auth?.currentUser?.uid]);
 
     return (
         <section className="page">

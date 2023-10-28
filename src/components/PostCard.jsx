@@ -1,19 +1,25 @@
 import { useNavigate } from "react-router-dom";
 import UserAvatar from "./UserAvatar";
 import { useState, useEffect } from "react";
+import { getAuth } from "firebase/auth";
 
 export default function PostCard({ post }) {
+    const auth = getAuth();
     const navigate = useNavigate();
-    const [user, setUser] = useState({});
-    const url = `${import.meta.env.VITE_FIREBASE_DB_URL}/users/${post.uid}.json`;
+    const [favs, setFavs] = useState({});
+    const url = `${import.meta.env.VITE_FIREBASE_DB_URL}/users/${auth?.currentUser?.uid}/favorites.json`;
+    const favUrl = `${import.meta.env.VITE_FIREBASE_DB_URL}/users/${auth?.currentUser?.uid}/favorites/${post.id}.json`;
 
     useEffect(() => {
-        async function getUser() {
+        async function getFavorites() {
             const response = await fetch(url);
             const data = await response.json();
-            setUser(data);
+            if (data) {
+                console.log(data);
+                setFavs(data);
+            }
         }
-        getUser();
+        getFavorites();
     }, [url]);
 
     /**
@@ -24,31 +30,36 @@ export default function PostCard({ post }) {
     }
 
     async function handleAddToFav() {
-        const favs = user.favs || [];
-        favs.push(post.id);
-        await updateFavs(favs);
+        const response = await fetch(favUrl, {
+            method: "PUT",
+            body: JSON.stringify(post.id)
+        });
+        if (response.ok) {
+            // update local state
+            setFavs({ ...favs, [post.id]: post.id });
+        }
     }
 
     async function handleRemoveFromFav() {
-        const favs = user.favs.filter(fav => fav !== post.id);
-        updateFavs(favs);
-    }
-
-    async function updateFavs(favs) {
-        const response = await fetch(url, { method: "PATCH", body: JSON.stringify({ favs }) });
+        const response = await fetch(favUrl, {
+            method: "DELETE"
+        });
         if (response.ok) {
-            setUser({ ...user, favs: favs });
+            // update local state
+            const current = { ...favs };
+            delete current[post.id];
+            setFavs(current);
         }
     }
 
     return (
         <article>
             <div onClick={handleClick}>
-                <UserAvatar user={user} />
+                <UserAvatar uid={post.uid} />
                 <img src={post.image} alt={post.caption} />
                 <h2>{post.caption}</h2>
             </div>
-            {user.favs?.includes(post.id) ? (
+            {favs[post.id] ? (
                 <button className="light" onClick={handleRemoveFromFav}>
                     Remove from favorites
                 </button>

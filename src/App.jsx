@@ -9,7 +9,6 @@ import ProfilePage from "./pages/ProfilePage";
 import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
 import UpdatePage from "./pages/UpdatePage";
-import FavsPage from "./pages/FavsPage";
 
 export default function App() {
     const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth")); // default value comes from localStorage
@@ -38,7 +37,6 @@ export default function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/create" element={<CreatePage />} />
                 <Route path="/posts/:postId" element={<UpdatePage />} />
-                <Route path="/favs" element={<FavsPage />} />
                 <Route path="/profile" element={<ProfilePage />} />
                 <Route path="*" element={<Navigate to="/" />} />
             </Routes>

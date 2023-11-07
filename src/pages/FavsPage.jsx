@@ -1,11 +1,8 @@
-import { getAuth } from "firebase/auth";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import PostCard from "../components/PostCard";
 
-export default function HomePage() {
+export default function FavsPage() {
     const [posts, setPosts] = useState([]);
-    const auth = getAuth();
-    const [favs, setFavs] = useState({});
 
     useEffect(() => {
         async function getPosts() {
@@ -18,23 +15,11 @@ export default function HomePage() {
         getPosts();
     }, []);
 
-    useEffect(() => {
-        async function getFavorites() {
-            const url = `${import.meta.env.VITE_FIREBASE_DB_URL}/users/${auth?.currentUser?.uid}/favorites.json`;
-            const response = await fetch(url);
-            const data = await response.json();
-            if (data) {
-                setFavs(data);
-            }
-        }
-        getFavorites();
-    }, [auth?.currentUser?.uid]);
-
     return (
         <section className="page">
             <section className="grid-container">
                 {posts.map(post => (
-                    <PostCard post={post} key={post.id} fav={favs[post.id]} />
+                    <PostCard post={post} key={post.id} />
                 ))}
             </section>
         </section>

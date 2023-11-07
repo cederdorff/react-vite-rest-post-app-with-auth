@@ -1,10 +1,8 @@
-import { getAuth } from "firebase/auth";
 import { useEffect, useState } from "react";
 import PostCard from "../components/PostCard";
 
 export default function HomePage() {
     const [posts, setPosts] = useState([]);
-    const auth = getAuth();
 
     useEffect(() => {
         async function getPosts() {

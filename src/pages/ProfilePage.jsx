@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
 import { getAuth, signOut } from "firebase/auth";
+import { useEffect, useState } from "react";
 import imgPlaceholder from "../assets/img/user-placeholder.jpg";
 import UserPosts from "../components/UserPosts";
 

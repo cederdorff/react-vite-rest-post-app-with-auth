@@ -11,7 +11,7 @@ import SignUpPage from "./pages/SignUpPage";
 import UpdatePage from "./pages/UpdatePage";
 
 export default function App() {
-    const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth")); // default value comes from localStorage
+    const [isAuth, setIsAuth] = useState(localStorage.getItem("isAuth")); // start default value comes from localStorage
 
     useEffect(() => {
         const auth = getAuth();

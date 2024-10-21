@@ -1,81 +1,121 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import imgPlaceholder from "../assets/img/img-placeholder.jpg";
+import { useNavigate } from "react-router-dom";
 
 export default function PostForm({ savePost, post }) {
-    const [caption, setCaption] = useState("");
-    const [image, setImage] = useState("");
-    const [errorMessage, setErrorMessage] = useState("");
+  const [caption, setCaption] = useState("");
+  const [image, setImage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
-    useEffect(() => {
-        if (post?.caption && post?.image) {
-            // if post, set the states with values from the post object.
-            // The post object is a prop, passed from UpdatePage
-            setCaption(post.caption);
-            setImage(post.image);
-        }
-    }, [post]); // useEffect is called every time post changes.
+  const fileInputRef = useRef(null);
 
-    /**
-     * handleImageChange is called every time the user chooses an image in the fire system.
-     * The event is fired by the input file field in the form
-     */
-    function handleImageChange(event) {
-        const file = event.target.files[0];
-        if (file.size < 500000) {
-            // image file size must be below 0,5MB
-            const reader = new FileReader();
-            reader.onload = event => {
-                setImage(event.target.result);
-            };
-            reader.readAsDataURL(file);
-            setErrorMessage(""); // reset errorMessage state
-        } else {
-            // if not below 0.5MB display an error message using the errorMessage state
-            setErrorMessage("The image file is too big!");
-        }
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (post?.caption && post?.image) {
+      // if post, set the states with values from the post object.
+      // The post object is a prop, passed from UpdatePage
+      setCaption(post.caption);
+      setImage(post.image);
     }
+  }, [post]); // useEffect is called every time post changes.
 
-    function handleSubmit(event) {
-        event.preventDefault();
-        const formData = {
-            // create a new objebt to store the value from states / input fields
-            caption: caption,
-            image: image
-        };
-
-        const validForm = formData.caption && formData.image; // will return false if one of the properties doesn't have a value
-        if (validForm) {
-            // if all fields/ properties are filled, then call savePost
-            savePost(formData);
-        } else {
-            // if not, set errorMessage state.
-            setErrorMessage("Please, fill in all fields.");
-        }
+  /**
+   * handleImageChange is called every time the user chooses an image in the fire system.
+   * The event is fired by the input file field in the form
+   */
+  function handleImageChange(event) {
+    const file = event.target.files[0];
+    if (file.size < 500000) {
+      // image file size must be below 0,5MB
+      const reader = new FileReader();
+      reader.onload = event => {
+        setImage(event.target.result);
+      };
+      reader.readAsDataURL(file);
+      setErrorMessage(""); // reset errorMessage state
+    } else {
+      // if not below 0.5MB display an error message using the errorMessage state
+      setErrorMessage("The image file is too big!");
     }
+  }
 
-    return (
-        <form onSubmit={handleSubmit}>
-            <label>
-                Caption
-                <input
-                    type="text"
-                    value={caption}
-                    placeholder="Type a title"
-                    onChange={e => setCaption(e.target.value)}
-                />
-            </label>
-            <label>
-                Image
-                <input type="file" className="file-input" accept="image/*" onChange={handleImageChange} />
-                <img
-                    className="image-preview"
-                    src={image}
-                    alt="Choose"
-                    onError={event => (event.target.src = imgPlaceholder)}
-                />
-            </label>
-            <p className="text-error">{errorMessage}</p>
-            <button type="submit">Save</button>
-        </form>
+  function handleSubmit(event) {
+    event.preventDefault();
+    const formData = {
+      // create a new objebt to store the value from states / input fields
+      caption: caption,
+      image: image
+    };
+
+    const validForm = formData.caption && formData.image; // will return false if one of the properties doesn't have a value
+    if (validForm) {
+      // if all fields/ properties are filled, then call savePost
+      savePost(formData);
+    } else {
+      // if not, set errorMessage state.
+      setErrorMessage("Please, fill in all fields.");
+    }
+  }
+
+  async function deletePost() {
+    const confirmDelete = window.confirm(
+      `Do you want to delete post, ${post.title}?`
     );
+    if (confirmDelete) {
+      const response = await fetch(url, {
+        method: "DELETE"
+      });
+      if (response.ok) {
+        console.log("Post deleted");
+        navigate("/");
+      } else {
+        console.log("Sorry, something went wrong");
+      }
+    }
+  }
+
+  return (
+    <form className="form-grid" onSubmit={handleSubmit}>
+      <label htmlFor="caption">Caption</label>
+      <input
+        id="caption"
+        name="caption"
+        type="text"
+        value={caption}
+        aria-label="caption"
+        placeholder="Write a caption..."
+        onChange={e => setCaption(e.target.value)}
+      />
+      <label htmlFor="image">Image</label>
+      <img
+        id="image"
+        className="image-preview"
+        src={image}
+        alt="Choose"
+        onError={event => (event.target.src = imgPlaceholder)}
+        onClick={() => fileInputRef.current.click()}
+      />
+      <input
+        id="image-file"
+        type="file"
+        className="file-input hide"
+        accept="image/*"
+        onChange={handleImageChange}
+        ref={fileInputRef}
+      />
+      <div className="error-message">
+        <p>{errorMessage}</p>
+      </div>
+
+      <div className="btns">
+        <button>Save</button>
+        {post && (
+          <button className="btn-delete" onClick={deletePost}>
+            Delete Post
+          </button>
+        )}
+      </div>
+    </form>
+  );
 }

@@ -1,5 +1,5 @@
 import { signOut } from "firebase/auth";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import imgPlaceholder from "../assets/img/user-placeholder.jpg";
 import UserPosts from "../components/UserPosts";
 import { auth } from "../firebase-config";
@@ -13,6 +13,7 @@ export default function ProfilePage() {
   const url = `${import.meta.env.VITE_FIREBASE_DB_URL}/users/${
     auth.currentUser?.uid
   }.json`;
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     async function getUser() {
@@ -113,7 +114,7 @@ export default function ProfilePage() {
           src={image}
           alt="Choose"
           onError={event => (event.target.src = imgPlaceholder)}
-          onClick={() => document.querySelector("#image-file").click()}
+          onClick={() => fileInputRef.current.click()}
         />
         <input
           id="image-file"
@@ -121,14 +122,18 @@ export default function ProfilePage() {
           className="file-input hide"
           accept="image/*"
           onChange={handleImageChange}
+          ref={fileInputRef}
         />
-
-        <p className="text-error">{errorMessage}</p>
-        <button>Save User</button>
+        <div className="error-message">
+          <p>{errorMessage}</p>
+        </div>
+        <div className="btns">
+          <button>Save User</button>{" "}
+          <button className="btn-cancel" onClick={handleSignOut}>
+            Sign Out
+          </button>
+        </div>
       </form>
-      <button className="btn-outline" onClick={handleSignOut}>
-        Sign Out
-      </button>
 
       <h2>Posts</h2>
       <UserPosts uid={auth.currentUser?.uid} />

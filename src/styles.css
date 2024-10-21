@@ -108,6 +108,16 @@ form[action$="destroy"] button,
   color: #f44250;
 }
 
+.btn-delete {
+  background-color: var(--white);
+  color: #f44250;
+}
+
+.btn-delete:hover {
+  background-color: #f44250;
+  color: var(--white);
+}
+
 form[action$="destroy"] button:hover,
 .btn-cancel:hover {
   background-color: #f44250;
@@ -221,6 +231,7 @@ nav a.active {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1em;
+  margin: 2em 0 0;
 }
 
 @media (min-width: 600px) {

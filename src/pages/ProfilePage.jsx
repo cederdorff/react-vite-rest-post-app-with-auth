@@ -28,7 +28,7 @@ export default function ProfilePage() {
       }
     }
     getUser();
-  }, [auth.currentUser, url]); // dependencies: useEffect is executed when auth.currentUser changes
+  }, [url]); // dependencies: useEffect is executed when url changes
 
   async function handleSubmit(event) {
     event.preventDefault();

@@ -40,7 +40,7 @@ export default function SignInPage() {
         <button>Sign in</button>
       </form>
       <p className="text-center">
-        Don't have an account? <Link to="/sign-up">Sign Up</Link>
+        Don&apos;t have an account? <Link to="/sign-up">Sign Up</Link>
       </p>
     </section>
   );

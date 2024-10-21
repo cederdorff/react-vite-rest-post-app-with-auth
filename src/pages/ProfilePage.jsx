@@ -75,66 +75,67 @@ export default function ProfilePage() {
 
   return (
     <section className="page">
-      <h1>Profile</h1>
-      <form className="form-grid" onSubmit={handleSubmit}>
-        <label htmlFor="name">Name</label>
-        <input
-          id="name"
-          type="text"
-          value={name}
-          onChange={e => setName(e.target.value)}
-          name="name"
-          placeholder="Type name"
-        />
+      <div className="container">
+        <h1>Profile</h1>
+        <form className="form-grid" onSubmit={handleSubmit}>
+          <label htmlFor="name">Name</label>
+          <input
+            id="name"
+            type="text"
+            value={name}
+            onChange={e => setName(e.target.value)}
+            name="name"
+            placeholder="Type name"
+          />
 
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          name="email"
-          placeholder="Type email"
-          disabled
-        />
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+            name="email"
+            placeholder="Type email"
+            disabled
+          />
 
-        <label htmlFor="title">Title</label>
-        <input
-          id="title"
-          type="text"
-          value={title}
-          onChange={e => setTitle(e.target.value)}
-          name="title"
-          placeholder="Type your title"
-        />
+          <label htmlFor="title">Title</label>
+          <input
+            id="title"
+            type="text"
+            value={title}
+            onChange={e => setTitle(e.target.value)}
+            name="title"
+            placeholder="Type your title"
+          />
 
-        <label htmlFor="image">Image</label>
-        <img
-          id="image"
-          className="image-preview"
-          src={image}
-          alt="Choose"
-          onError={event => (event.target.src = imgPlaceholder)}
-          onClick={() => fileInputRef.current.click()}
-        />
-        <input
-          id="image-file"
-          type="file"
-          className="file-input hide"
-          accept="image/*"
-          onChange={handleImageChange}
-          ref={fileInputRef}
-        />
-        <div className="error-message">
-          <p>{errorMessage}</p>
-        </div>
-        <div className="btns">
-          <button>Save User</button>{" "}
-          <button className="btn-cancel" onClick={handleSignOut}>
-            Sign Out
-          </button>
-        </div>
-      </form>
-
+          <label htmlFor="image">Image</label>
+          <img
+            id="image"
+            className="image-preview"
+            src={image}
+            alt="Choose"
+            onError={event => (event.target.src = imgPlaceholder)}
+            onClick={() => fileInputRef.current.click()}
+          />
+          <input
+            id="image-file"
+            type="file"
+            className="file-input hide"
+            accept="image/*"
+            onChange={handleImageChange}
+            ref={fileInputRef}
+          />
+          <div className="error-message">
+            <p>{errorMessage}</p>
+          </div>
+          <div className="btns">
+            <button>Save User</button>{" "}
+            <button className="btn-cancel" onClick={handleSignOut}>
+              Sign Out
+            </button>
+          </div>
+        </form>
+      </div>
       <h2>Posts</h2>
       <UserPosts uid={auth.currentUser?.uid} />
     </section>

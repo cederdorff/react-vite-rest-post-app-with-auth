@@ -14,11 +14,12 @@ export default function UpdatePage() {
     async function getPost() {
       const response = await fetch(url);
       const data = await response.json();
+      data.id = params.postId;
       setPost(data);
     }
 
     getPost();
-  }, [url]);
+  }, [params.postId, url]);
 
   async function savePost(postToUpdate) {
     postToUpdate.uid = post.uid;
@@ -37,8 +38,10 @@ export default function UpdatePage() {
 
   return (
     <section className="page">
-      <h1>Update Post</h1>
-      <PostForm post={post} savePost={savePost} />
+      <div className="container">
+        <h1>Update Post</h1>
+        <PostForm post={post} savePost={savePost} />
+      </div>
     </section>
   );
 }

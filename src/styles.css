@@ -84,6 +84,7 @@ button {
   padding: 1em 2em;
   background-color: var(--green);
   transition: 0.5s;
+  width: 100%;
 }
 
 button:hover {
@@ -103,35 +104,25 @@ button:active {
 }
 
 form[action$="destroy"] button,
-.btn-cancel {
-  background-color: var(--white);
-  color: #f44250;
-}
-
+.btn-cancel,
 .btn-delete {
   background-color: var(--white);
   color: #f44250;
 }
 
+form[action$="destroy"] button:hover,
+.btn-cancel:hover,
 .btn-delete:hover {
   background-color: #f44250;
   color: var(--white);
 }
 
-form[action$="destroy"] button:hover,
-.btn-cancel:hover {
-  background-color: #f44250;
-  color: var(--white);
-}
-
-form input {
+formform input {
   width: 100%;
 }
 
 form .btns {
   grid-column: 2;
-  display: flex;
-  gap: 0.5em;
 }
 
 form img {
@@ -145,13 +136,12 @@ form img {
   gap: 0.5em;
 }
 
-/* ---------- Post Form Styling ---------- */
+/* ---------- Form Styling ---------- */
 
-.form-grid {
+form {
   display: grid;
   grid-template-columns: 1fr 2fr;
   gap: 1em;
-  max-width: 60rem;
   align-items: center;
   box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.25);
   padding: 1.5em;
@@ -159,6 +149,7 @@ form img {
   transition: 0.5s;
   animation: fadeIn 0.5s;
   border-radius: 8px;
+  margin: auto;
 }
 
 #sign-in-form,
@@ -211,7 +202,13 @@ nav a.active {
 /* ---------- Page Styling ---------- */
 .page {
   animation: fadeIn 0.5s;
-  padding: 105px 2em;
+  padding: 140px 2em 2em;
+}
+
+/* ---------- Container Styling ---------- */
+.container {
+  max-width: 700px;
+  margin: auto;
 }
 
 /* ---------- Animations ---------- */
@@ -231,7 +228,6 @@ nav a.active {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1em;
-  margin: 2em 0 0;
 }
 
 @media (min-width: 600px) {
@@ -248,10 +244,6 @@ nav a.active {
 
 .grid > .post-card {
   cursor: pointer;
-}
-
-.grid > .post-card:hover {
-  box-shadow: 0 8px 16px 0 var(--green);
 }
 
 /* ---------- Filter Grid styling ---------- */
@@ -278,7 +270,7 @@ nav a.active {
   margin: 1em 0 0;
 }
 
-/* ---------- post Card styling ---------- */
+/* ---------- User Card styling ---------- */
 
 .post-card {
   box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.25);
@@ -286,18 +278,27 @@ nav a.active {
   background-color: var(--white);
   transition: 0.5s;
   animation: fadeIn 0.5s;
-  border-radius: 8px;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+.post-card:hover {
+  box-shadow: 0 8px 16px 0 var(--green);
 }
 
 .post-card img {
   width: 100%;
   height: 200px;
   object-fit: cover;
+  border-radius: 10px;
 }
 
-.post-link {
-  text-decoration: none;
-  color: var(--text-color-dark);
+.post-card h2 {
+  margin: 0.5em 0 0;
+}
+
+.post-card .title {
+  margin: 0;
 }
 
 /* ---------- avatar styling ---------- */
@@ -326,17 +327,13 @@ nav a.active {
   border-radius: 50%;
 }
 
-/* ---------- post Page styling ---------- */
+/* ---------- User Page styling ---------- */
 
-#post-page .post-card {
-  max-width: 40rem;
-}
-
-#post-page .post-card > img {
+#user-page .post-card > img {
   height: auto;
 }
 
-#post-page .btns {
+#user-page .btns {
   padding: 1em 0;
 }
 

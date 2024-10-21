@@ -59,10 +59,15 @@ export default function PostForm({ savePost, post }) {
   }
 
   async function deletePost() {
+    console.log("Delete post", post);
+
     const confirmDelete = window.confirm(
       `Do you want to delete post, ${post.title}?`
     );
     if (confirmDelete) {
+      const url = `${import.meta.env.VITE_FIREBASE_DB_URL}/posts/${
+        post.id
+      }.json`;
       const response = await fetch(url, {
         method: "DELETE"
       });

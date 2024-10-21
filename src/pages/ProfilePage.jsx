@@ -75,53 +75,54 @@ export default function ProfilePage() {
   return (
     <section className="page">
       <h1>Profile</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name
-          <input
-            type="text"
-            value={name}
-            onChange={e => setName(e.target.value)}
-            name="name"
-            placeholder="Type name"
-          />
-        </label>
-        <label>
-          Email
-          <input
-            type="email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
-            name="email"
-            placeholder="Type email"
-            disabled
-          />
-        </label>
-        <label>
-          Title
-          <input
-            type="text"
-            value={title}
-            onChange={e => setTitle(e.target.value)}
-            name="title"
-            placeholder="Type your title"
-          />
-        </label>
-        <label>
-          Image
-          <input
-            type="file"
-            className="file-input"
-            accept="image/*"
-            onChange={handleImageChange}
-          />
-          <img
-            className="image-preview"
-            src={image}
-            alt="Choose"
-            onError={event => (event.target.src = imgPlaceholder)}
-          />
-        </label>
+      <form className="form-grid" onSubmit={handleSubmit}>
+        <label htmlFor="name">Name</label>
+        <input
+          id="name"
+          type="text"
+          value={name}
+          onChange={e => setName(e.target.value)}
+          name="name"
+          placeholder="Type name"
+        />
+
+        <label htmlFor="email">Email</label>
+        <input
+          type="email"
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          name="email"
+          placeholder="Type email"
+          disabled
+        />
+
+        <label htmlFor="title">Title</label>
+        <input
+          id="title"
+          type="text"
+          value={title}
+          onChange={e => setTitle(e.target.value)}
+          name="title"
+          placeholder="Type your title"
+        />
+
+        <label htmlFor="image">Image</label>
+        <img
+          id="image"
+          className="image-preview"
+          src={image}
+          alt="Choose"
+          onError={event => (event.target.src = imgPlaceholder)}
+          onClick={() => document.querySelector("#image-file").click()}
+        />
+        <input
+          id="image-file"
+          type="file"
+          className="file-input hide"
+          accept="image/*"
+          onChange={handleImageChange}
+        />
+
         <p className="text-error">{errorMessage}</p>
         <button>Save User</button>
       </form>

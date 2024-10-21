@@ -44,30 +44,49 @@ export default function SignUpPage() {
   }
 
   return (
-    <section className="page">
-      <div className="container">
-        <h1>Sign Up</h1>
-        <form onSubmit={handleSignUp}>
-          <input
-            type="text"
-            value={name}
-            onChange={e => setName(e.target.value)}
-            name="name"
-            placeholder="Type your name"
-          />
-          <input type="email" name="mail" placeholder="Type your mail" />
-          <input
-            type="password"
-            name="password"
-            placeholder="Type your password"
-          />
-          <p className="text-error">{errorMessage}</p>
+    <section id="sign-up-page" className="page">
+      <h1>Sign Up</h1>
+      <form id="sign-up-form" onSubmit={handleSignUp}>
+        <label htmlFor="name">Name</label>
+        <input
+          id="name"
+          type="text"
+          value={name}
+          onChange={e => setName(e.target.value)}
+          name="name"
+          placeholder="Type your name..."
+        />
+        <label htmlFor="mail">Mail</label>
+        <input
+          id="mail"
+          type="email"
+          name="mail"
+          aria-label="mail"
+          placeholder="Type your mail..."
+          required
+          autoComplete="off"
+        />
+
+        <label htmlFor="password">Password</label>
+
+        <input
+          id="password"
+          type="password"
+          name="password"
+          aria-label="password"
+          placeholder="Type your password..."
+          autoComplete="current-password"
+        />
+        <div className="error-message">
+          <p>{errorMessage}</p>{" "}
+        </div>
+        <div className="btns">
           <button>Sign Up</button>
-        </form>
-        <p className="text-center">
-          Already have an account? <Link to="/sign-in">Sign In</Link>
-        </p>
-      </div>
+        </div>
+      </form>
+      <p className="text-center">
+        Already have an account? <Link to="/sign-in">Sign In</Link>
+      </p>
     </section>
   );
 }

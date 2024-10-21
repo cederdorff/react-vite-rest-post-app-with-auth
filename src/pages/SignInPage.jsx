@@ -27,23 +27,37 @@ export default function SignInPage() {
       });
   }
   return (
-    <section className="page">
-      <div className="container">
-        <h1>Sign In</h1>
-        <form onSubmit={signIn}>
-          <input type="email" name="mail" placeholder="Type your mail" />
-          <input
-            type="password"
-            name="password"
-            placeholder="Type your password"
-          />
-          <p className="text-error">{errorMessage}</p>
-          <button>Sign in</button>
-        </form>
-        <p className="text-center">
-          Don&apos;t have an account? <Link to="/sign-up">Sign Up</Link>
-        </p>
-      </div>
+    <section id="sign-in-page" className="page">
+      <h1>Sign In</h1>
+      <form id="sign-in-form" onSubmit={signIn}>
+        <label htmlFor="mail">Mail</label>
+        <input
+          id="mail"
+          type="email"
+          name="mail"
+          aria-label="mail"
+          placeholder="Type your mail..."
+          required
+        />
+        <label htmlFor="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          name="password"
+          aria-label="password"
+          placeholder="Type your password..."
+          autoComplete="current-password"
+        />
+        <div className="error-message">
+          <p>{errorMessage}</p>
+        </div>
+        <div className="btns">
+          <button>Sign In</button>
+        </div>
+      </form>
+      <p className="text-center">
+        Don&apos;t have an account? <Link to="/sign-up">Sign Up</Link>
+      </p>
     </section>
   );
 }

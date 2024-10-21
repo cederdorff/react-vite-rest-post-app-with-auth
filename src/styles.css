@@ -138,7 +138,6 @@ form {
   transition: 0.5s;
   animation: fadeIn 0.5s;
   border-radius: 8px;
-  margin: auto;
 }
 
 #sign-in-form,

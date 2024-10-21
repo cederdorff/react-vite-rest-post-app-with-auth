@@ -1,6 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import imgPlaceholder from "../assets/img/img-placeholder.jpg";
-import { useNavigate } from "react-router-dom";
 
 export default function PostForm({ savePost, post }) {
   const [caption, setCaption] = useState("");
@@ -8,8 +6,6 @@ export default function PostForm({ savePost, post }) {
   const [errorMessage, setErrorMessage] = useState("");
 
   const fileInputRef = useRef(null);
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (post?.caption && post?.image) {
@@ -58,28 +54,6 @@ export default function PostForm({ savePost, post }) {
     }
   }
 
-  async function deletePost() {
-    console.log("Delete post", post);
-
-    const confirmDelete = window.confirm(
-      `Do you want to delete post, ${post.title}?`
-    );
-    if (confirmDelete) {
-      const url = `${import.meta.env.VITE_FIREBASE_DB_URL}/posts/${
-        post.id
-      }.json`;
-      const response = await fetch(url, {
-        method: "DELETE"
-      });
-      if (response.ok) {
-        console.log("Post deleted");
-        navigate("/");
-      } else {
-        console.log("Sorry, something went wrong");
-      }
-    }
-  }
-
   return (
     <form className="form-grid" onSubmit={handleSubmit}>
       <label htmlFor="caption">Caption</label>
@@ -96,9 +70,16 @@ export default function PostForm({ savePost, post }) {
       <img
         id="image"
         className="image-preview"
-        src={image}
+        src={
+          image
+            ? image
+            : "https://placehold.co/600x400?text=Click+here+to+select+an+image"
+        }
         alt="Choose"
-        onError={event => (event.target.src = imgPlaceholder)}
+        onError={e =>
+          (e.target.src =
+            "https://placehold.co/600x400?text=Error+loading+image")
+        }
         onClick={() => fileInputRef.current.click()}
       />
       <input
@@ -115,11 +96,6 @@ export default function PostForm({ savePost, post }) {
 
       <div className="btns">
         <button>Save</button>
-        {post && (
-          <button className="btn-delete" onClick={deletePost}>
-            Delete Post
-          </button>
-        )}
       </div>
     </form>
   );

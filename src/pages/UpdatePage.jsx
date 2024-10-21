@@ -36,11 +36,35 @@ export default function UpdatePage() {
     }
   }
 
+  async function deletePost() {
+    console.log("Delete post", post);
+
+    const confirmDelete = window.confirm(
+      `Do you want to delete post, ${post.title}?`
+    );
+    if (confirmDelete) {
+      const response = await fetch(url, {
+        method: "DELETE"
+      });
+      if (response.ok) {
+        console.log("Post deleted");
+        navigate("/");
+      } else {
+        console.log("Sorry, something went wrong");
+      }
+    }
+  }
+
   return (
     <section className="page">
       <div className="container">
         <h1>Update Post</h1>
         <PostForm post={post} savePost={savePost} />
+        <div className="btns">
+          <button type="button" className="btn-delete" onClick={deletePost}>
+            Delete Post
+          </button>
+        </div>
       </div>
     </section>
   );

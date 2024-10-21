@@ -1,6 +1,5 @@
 import { signOut } from "firebase/auth";
 import { useEffect, useRef, useState } from "react";
-import imgPlaceholder from "../assets/img/user-placeholder.jpg";
 import UserPosts from "../components/UserPosts";
 import { auth } from "../firebase-config";
 
@@ -25,7 +24,7 @@ export default function ProfilePage() {
         setName(userData.name);
         setEmail(auth.currentUser?.email);
         setTitle(userData.title || "");
-        setImage(userData.image || imgPlaceholder);
+        setImage(userData.image);
       }
     }
     getUser();
@@ -112,9 +111,16 @@ export default function ProfilePage() {
           <img
             id="image"
             className="image-preview"
-            src={image}
+            src={
+              image
+                ? image
+                : "https://placehold.co/600x400?text=Click+here+to+select+an+image"
+            }
             alt="Choose"
-            onError={event => (event.target.src = imgPlaceholder)}
+            onError={e =>
+              (e.target.src =
+                "https://placehold.co/600x400?text=Error+loading+image")
+            }
             onClick={() => fileInputRef.current.click()}
           />
           <input
@@ -129,12 +135,14 @@ export default function ProfilePage() {
             <p>{errorMessage}</p>
           </div>
           <div className="btns">
-            <button>Save User</button>{" "}
-            <button className="btn-cancel" onClick={handleSignOut}>
-              Sign Out
-            </button>
+            <button>Save User</button>
           </div>
         </form>
+        <div className="btns">
+          <button className="btn-cancel" onClick={handleSignOut}>
+            Sign Out
+          </button>
+        </div>
       </div>
       <h2>Posts</h2>
       <UserPosts uid={auth.currentUser?.uid} />

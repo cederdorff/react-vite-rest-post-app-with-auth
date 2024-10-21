@@ -4,18 +4,17 @@
   --dark-green: rgb(9, 47, 59);
   --light-green: rgb(172, 198, 201);
   --light-grey: #f1f1f4;
-  --text-color-danger: rgb(152, 58, 58);
+  --text-color-danger: #f44250;
   --text-color-dark: #333;
   --text-color-light: #f1f1f1;
-  --text-color-danger: #f44250;
   --white: #f1f1f1;
 }
 
-/* ---------- HTML, body and rest styling ---------- */
-
+/* ---------- Global Styling ---------- */
 html {
   box-sizing: border-box;
 }
+
 *,
 *:before,
 *:after {
@@ -35,22 +34,18 @@ html {
 }
 
 /* ---------- Typography ---------- */
-
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
 }
 
-h2 {
-  font-weight: 500;
-  letter-spacing: 0.1px;
-}
-
+h2,
 h3 {
   font-weight: 500;
   letter-spacing: 0.1px;
 }
 
+/* ---------- Link Styling ---------- */
 a {
   color: var(--green);
   text-decoration: none;
@@ -61,8 +56,7 @@ a:hover {
   color: var(--dark-green);
 }
 
-/* ---------- Form, input and button Styling ---------- */
-
+/* ---------- Form, Input, and Button Styling ---------- */
 textarea,
 input,
 button,
@@ -77,6 +71,7 @@ select {
   line-height: 1.5;
   margin: 0;
 }
+
 button {
   color: var(--white);
   font-weight: 500;
@@ -117,7 +112,8 @@ form[action$="destroy"] button:hover,
   color: var(--white);
 }
 
-formform input {
+/* ---------- Form Specific Styling ---------- */
+form input {
   width: 100%;
 }
 
@@ -130,13 +126,6 @@ form img {
   border-radius: 8px;
   box-shadow: 0 0px 1px hsla(0, 0%, 0%, 0.2), 0 1px 2px hsla(0, 0%, 0%, 0.2);
 }
-
-.btns {
-  display: flex;
-  gap: 0.5em;
-}
-
-/* ---------- Form Styling ---------- */
 
 form {
   display: grid;
@@ -157,6 +146,16 @@ form {
   width: 35rem;
 }
 
+/* ---------- Button Group ---------- */
+.btns {
+  display: flex;
+  gap: 0.5em;
+}
+
+.container > .btns {
+  margin: 1em 0;
+}
+
 /* ---------- Navigation Styling ---------- */
 nav {
   background-color: var(--green);
@@ -171,7 +170,6 @@ nav {
   gap: 1em;
 }
 
-/* Style the links inside the navigation bar */
 nav a {
   display: inline-block;
   color: var(--text-color-light);
@@ -180,20 +178,18 @@ nav a {
   text-decoration: none;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  border: 2px solid var(--green); /* Use the --green variable */
+  border: 2px solid var(--green);
   font-weight: 500;
   font-size: 1.2em;
   border-radius: 8px;
   transition: 0.5s;
 }
 
-/* Change the color of links on hover */
 nav a:hover {
   background-color: var(--light-green);
   color: var(--green);
 }
 
-/* Add a color to the active/current link */
 nav a.active {
   background-color: var(--light-green);
   color: var(--green);
@@ -211,19 +207,7 @@ nav a.active {
   margin: auto;
 }
 
-/* ---------- Animations ---------- */
-/* fade in */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-/* ---------- grid container styling ---------- */
+/* ---------- Grid Container Styling ---------- */
 .grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -246,8 +230,7 @@ nav a.active {
   cursor: pointer;
 }
 
-/* ---------- Filter Grid styling ---------- */
-
+/* ---------- Grid Filter Styling ---------- */
 .grid-filter {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
@@ -270,8 +253,7 @@ nav a.active {
   margin: 1em 0 0;
 }
 
-/* ---------- User Card styling ---------- */
-
+/* ---------- Post Card Styling ---------- */
 .post-card {
   box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.25);
   padding: 1.5em;
@@ -301,8 +283,7 @@ nav a.active {
   margin: 0;
 }
 
-/* ---------- avatar styling ---------- */
-
+/* ---------- Avatar Styling ---------- */
 .avatar {
   display: flex;
   align-items: center;
@@ -327,8 +308,7 @@ nav a.active {
   border-radius: 50%;
 }
 
-/* ---------- User Page styling ---------- */
-
+/* ---------- User Page Styling ---------- */
 #user-page .post-card > img {
   height: auto;
 }
@@ -359,4 +339,15 @@ nav a.active {
 
 .image-preview {
   cursor: pointer;
+}
+
+/* ---------- Animations ---------- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }

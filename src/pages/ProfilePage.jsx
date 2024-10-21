@@ -1,6 +1,5 @@
 import { signOut } from "firebase/auth";
-import { useEffect, useState } from "react";
-import imgPlaceholder from "../assets/img/user-placeholder.jpg";
+import { useEffect, useRef, useState } from "react";
 import UserPosts from "../components/UserPosts";
 import { auth } from "../firebase-config";
 
@@ -13,6 +12,7 @@ export default function ProfilePage() {
   const url = `${import.meta.env.VITE_FIREBASE_DB_URL}/users/${
     auth.currentUser?.uid
   }.json`;
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     async function getUser() {
@@ -24,7 +24,7 @@ export default function ProfilePage() {
         setName(userData.name);
         setEmail(auth.currentUser?.email);
         setTitle(userData.title || "");
-        setImage(userData.image || imgPlaceholder);
+        setImage(userData.image);
       }
     }
     getUser();
@@ -74,20 +74,20 @@ export default function ProfilePage() {
 
   return (
     <section className="page">
-      <h1>Profile</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Name
+      <div className="container">
+        <h1>Profile</h1>
+        <form className="form-grid" onSubmit={handleSubmit}>
+          <label htmlFor="name">Name</label>
           <input
+            id="name"
             type="text"
             value={name}
             onChange={e => setName(e.target.value)}
             name="name"
             placeholder="Type name"
           />
-        </label>
-        <label>
-          Email
+
+          <label htmlFor="email">Email</label>
           <input
             type="email"
             value={email}
@@ -96,39 +96,54 @@ export default function ProfilePage() {
             placeholder="Type email"
             disabled
           />
-        </label>
-        <label>
-          Title
+
+          <label htmlFor="title">Title</label>
           <input
+            id="title"
             type="text"
             value={title}
             onChange={e => setTitle(e.target.value)}
             name="title"
             placeholder="Type your title"
           />
-        </label>
-        <label>
-          Image
+
+          <label htmlFor="image">Image</label>
+          <img
+            id="image"
+            className="image-preview"
+            src={
+              image
+                ? image
+                : "https://placehold.co/600x400?text=Click+here+to+select+an+image"
+            }
+            alt="Choose"
+            onError={e =>
+              (e.target.src =
+                "https://placehold.co/600x400?text=Error+loading+image")
+            }
+            onClick={() => fileInputRef.current.click()}
+          />
           <input
+            id="image-file"
             type="file"
-            className="file-input"
+            className="file-input hide"
             accept="image/*"
             onChange={handleImageChange}
+            ref={fileInputRef}
           />
-          <img
-            className="image-preview"
-            src={image}
-            alt="Choose"
-            onError={event => (event.target.src = imgPlaceholder)}
-          />
-        </label>
-        <p className="text-error">{errorMessage}</p>
-        <button>Save User</button>
-      </form>
-      <button className="btn-outline" onClick={handleSignOut}>
-        Sign Out
-      </button>
-
+          <div className="error-message">
+            <p>{errorMessage}</p>
+          </div>
+          <div className="btns">
+            <button>Save User</button>
+          </div>
+        </form>
+        <div className="btns">
+          <button className="btn-cancel" onClick={handleSignOut}>
+            Sign Out
+          </button>
+        </div>
+      </div>
       <h2>Posts</h2>
       <UserPosts uid={auth.currentUser?.uid} />
     </section>

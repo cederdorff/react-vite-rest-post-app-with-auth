@@ -45,27 +45,29 @@ export default function SignUpPage() {
 
   return (
     <section className="page">
-      <h1>Sign Up</h1>
-      <form onSubmit={handleSignUp}>
-        <input
-          type="text"
-          value={name}
-          onChange={e => setName(e.target.value)}
-          name="name"
-          placeholder="Type your name"
-        />
-        <input type="email" name="mail" placeholder="Type your mail" />
-        <input
-          type="password"
-          name="password"
-          placeholder="Type your password"
-        />
-        <p className="text-error">{errorMessage}</p>
-        <button>Sign Up</button>
-      </form>
-      <p className="text-center">
-        Already have an account? <Link to="/sign-in">Sign In</Link>
-      </p>
+      <div className="container">
+        <h1>Sign Up</h1>
+        <form onSubmit={handleSignUp}>
+          <input
+            type="text"
+            value={name}
+            onChange={e => setName(e.target.value)}
+            name="name"
+            placeholder="Type your name"
+          />
+          <input type="email" name="mail" placeholder="Type your mail" />
+          <input
+            type="password"
+            name="password"
+            placeholder="Type your password"
+          />
+          <p className="text-error">{errorMessage}</p>
+          <button>Sign Up</button>
+        </form>
+        <p className="text-center">
+          Already have an account? <Link to="/sign-in">Sign In</Link>
+        </p>
+      </div>
     </section>
   );
 }
